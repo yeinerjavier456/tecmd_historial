@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Materias Pendientes</title>
+
+    <!-- Estilos de DataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+    <!-- jQuery y DataTables -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f8f9fa;
+        }
+        h2 {
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        .container {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 0 8px rgba(0,0,0,0.1);
+        }
+        #tablaPendientes {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .download {
+            display: block;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <a href="/exportar-pendientes" class="download">📥 Descargar Excel</a>
+        <h2>📌 Materias por ver</h2>
+        <table id="tablaPendientes" class="display">
+            <thead></thead>
+        </table>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $.getJSON("/api/pendientes", function (response) {
+                const data = response.data;
+                if (data.length === 0) {
+                    $('.container').html("<p style='text-align:center; font-weight:bold;'>⚠️ No hay materias pendientes</p>");
+                    return;
+                }
+
+                const columnas = Object.keys(data[0]).map(key => ({
+                    data: key,
+                    title: key.replace(/_/g, ' ').toUpperCase(),
+                    render: function (data) {
+                        if (key === "creditos") {
+                            return parseInt(data) || 0;
+                        }
+                        return data;
+                    }
+                }));
+
+                $('#tablaPendientes').DataTable({
+                    ajax: {
+                        url: "/api/pendientes",
+                        dataSrc: "data"
+                    },
+                    columns: columnas,
+                    pageLength: 10,
+                    language: {
+                        search: "🔎 Buscar:",
+                        lengthMenu: "Mostrar _MENU_ registros",
+                        info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                        paginate: {
+                            first: "Primero",
+                            last: "Último",
+                            next: "Siguiente",
+                            previous: "Anterior"
+                        },
+                        emptyTable: "No hay datos disponibles en la tabla"
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

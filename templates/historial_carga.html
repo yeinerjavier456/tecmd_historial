@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Subir Historial Académico</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .box {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .message {
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .success { color: green; }
+        .error { color: red; }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        button {
+            padding: 10px;
+            background-color: #007bff;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .nav {
+            text-align: center;
+            margin-top: 10px;
+        }
+        .nav a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .nav a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h2>📂 Subir Historial Académico</h2>
+        {% if error %}
+            <div class="message error">{{ error }}</div>
+        {% endif %}
+        {% if success %}
+            <div class="message success">{{ success }}</div>
+        {% endif %}
+        <form action="/subir-historial" method="post" enctype="multipart/form-data">
+            <input type="file" name="archivo" accept=".xlsx" required>
+            <button type="submit">Subir Archivo</button>
+        </form>
+        <div class="nav">
+            <a href="/notas">📄 Ver historial cargado</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Resumen de Carga</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            background: #f4f4f4;
+        }
+        .resumen {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            max-width: 500px;
+            margin: auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        ul {
+            font-size: 16px;
+            line-height: 1.8;
+        }
+        .volver {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="resumen">
+        <h2>✅ Resumen de Carga</h2>
+        <ul>
+            <li>Total registros en archivo: <strong>{{ totales }}</strong></li>
+            <li>Descartados por nota inválida (&lt; 3.0 o vacía): <strong>{{ descartados }}</strong></li>
+            <li>Eliminados por duplicados: <strong>{{ duplicados }}</strong></li>
+            <li>Insertados en base de datos: <strong>{{ finales }}</strong></li>
+        </ul>
+        <a href="/notas" class="volver">🔙 Ver tabla de notas</a>
+    </div>
+</body>
+</html>
