@@ -456,6 +456,7 @@ async def subir_historial(request: Request, archivo: UploadFile = File(...)):
         df.to_sql("historial_academico", con=engine, if_exists="replace", index=False)
 
     except Exception as e:
+        
         return templates.TemplateResponse("historial_carga.html", {
             "request": request,
             "error": f"⚠️ Error al subir archivo: {e}"
